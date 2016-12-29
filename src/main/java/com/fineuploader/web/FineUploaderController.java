@@ -45,5 +45,11 @@ public class FineUploaderController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
+    @CrossOrigin
+    @DeleteMapping("/uploads/{uuid}")
+    public ResponseEntity<Void> delete(@PathVariable("uuid") String uuid) {
+        storageService.delete(uuid);
+        return ResponseEntity.ok().build();
+    }
 
 }

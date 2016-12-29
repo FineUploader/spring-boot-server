@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +36,7 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException(String.format("File with uuid = [%s] is empty", ur.getUuid().toString()));
         }
 
-        Path targetFile = basePath.resolve(ur.getUuid().toString()).resolve(ur.getFileName());
+        Path targetFile = basePath.resolve(ur.getUuid()).resolve(ur.getFileName());
         try {
             Files.createDirectories(targetFile.getParent());
             Files.copy(ur.getFile().getInputStream(), targetFile);
@@ -48,7 +50,8 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void delete(String uuid) {
-
+        File targetDir = basePath.resolve(uuid).toFile();
+        FileSystemUtils.deleteRecursively(targetDir);
     }
 
 }

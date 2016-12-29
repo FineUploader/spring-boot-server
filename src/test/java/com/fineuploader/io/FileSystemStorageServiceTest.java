@@ -59,9 +59,4 @@ public class FileSystemStorageServiceTest {
         file.getParentFile().delete();
     }
 
-    @Test
-    public void delete() throws Exception {
-
-    }
-
 }
