@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Upload server properties
+ *
  * @author ovaldez
  */
 @ConfigurationProperties("fineuploader")

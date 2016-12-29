@@ -1,10 +1,12 @@
 package com.fineuploader.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author ovaldez
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UploadResponse {
 
     @JsonProperty("error")
@@ -16,7 +18,7 @@ public class UploadResponse {
         this.success = success;
     }
 
-    public UploadResponse(String errorMsg, boolean success) {
+    public UploadResponse(boolean success, String errorMsg) {
         this.errorMsg = errorMsg;
         this.success = success;
     }

@@ -1,54 +1,42 @@
 package com.fineuploader.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.UUID;
 
 /**
  * @author ovaldez
  */
 public class UploadRequest {
 
-    @JsonProperty("qquuid")
-    private UUID uuid;
+    private String uuid;
 
-    @JsonProperty("qqfile")
     private MultipartFile file;
 
-    @JsonProperty(value = "qqpartindex", defaultValue = "-1")
-    private int chunkIndex;
+    private Integer chunkIndex;
 
-    @JsonProperty("qqchunksize")
     private long chunkSize;
 
-    @JsonProperty("qqtotalfilesize")
     private long totalSize;
 
-    @JsonProperty("qqfilename")
     private String fileName;
 
-    public UUID getUuid() {
-        return uuid;
+    public UploadRequest(String uuid, MultipartFile file) {
+        this.uuid = uuid;
+        this.file = file;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public String getUuid() {
+        return uuid;
     }
 
     public MultipartFile getFile() {
         return file;
     }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    public int getChunkIndex() {
+    public Integer getChunkIndex() {
         return chunkIndex;
     }
 
-    public void setChunkIndex(int chunkIndex) {
+    public void setChunkIndex(Integer chunkIndex) {
         this.chunkIndex = chunkIndex;
     }
 
@@ -74,5 +62,16 @@ public class UploadRequest {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    @Override
+    public String toString() {
+        return "UploadRequest{" +
+                "uuid='" + uuid + '\'' +
+                ", chunkIndex=" + chunkIndex +
+                ", chunkSize=" + chunkSize +
+                ", totalSize=" + totalSize +
+                ", fileName='" + fileName + '\'' +
+                '}';
     }
 }
