@@ -7,16 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class UploadRequest {
 
-    private String uuid;
-
-    private MultipartFile file;
-
-    private Integer chunkIndex;
-
-    private long chunkSize;
-
-    private long totalSize;
-
+    private final String uuid;
+    private final MultipartFile file;
+    private int partIndex = -1;
+    private long partSize = -1;
+    private int totalParts = -1;
+    private long totalFileSize = -1;
     private String fileName;
 
     public UploadRequest(String uuid, MultipartFile file) {
@@ -32,28 +28,36 @@ public class UploadRequest {
         return file;
     }
 
-    public Integer getChunkIndex() {
-        return chunkIndex;
+    public int getPartIndex() {
+        return partIndex;
     }
 
-    public void setChunkIndex(Integer chunkIndex) {
-        this.chunkIndex = chunkIndex;
+    public void setPartIndex(int partIndex) {
+        this.partIndex = partIndex;
     }
 
-    public long getChunkSize() {
-        return chunkSize;
+    public long getPartSize() {
+        return partSize;
     }
 
-    public void setChunkSize(long chunkSize) {
-        this.chunkSize = chunkSize;
+    public void setPartSize(long partSize) {
+        this.partSize = partSize;
     }
 
-    public long getTotalSize() {
-        return totalSize;
+    public int getTotalParts() {
+        return totalParts;
     }
 
-    public void setTotalSize(long totalSize) {
-        this.totalSize = totalSize;
+    public void setTotalParts(int totalParts) {
+        this.totalParts = totalParts;
+    }
+
+    public long getTotalFileSize() {
+        return totalFileSize;
+    }
+
+    public void setTotalFileSize(long totalFileSize) {
+        this.totalFileSize = totalFileSize;
     }
 
     public String getFileName() {
@@ -68,9 +72,10 @@ public class UploadRequest {
     public String toString() {
         return "UploadRequest{" +
                 "uuid='" + uuid + '\'' +
-                ", chunkIndex=" + chunkIndex +
-                ", chunkSize=" + chunkSize +
-                ", totalSize=" + totalSize +
+                ", partIndex=" + partIndex +
+                ", partSize=" + partSize +
+                ", totalParts=" + totalParts +
+                ", totalFileSize=" + totalFileSize +
                 ", fileName='" + fileName + '\'' +
                 '}';
     }

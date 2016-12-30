@@ -11,4 +11,6 @@ public interface StorageService {
 
     void delete(String uuid);
 
+    void mergeChunks(String uuid, String fileName, int totalParts, long totalFileSize);
+
 }

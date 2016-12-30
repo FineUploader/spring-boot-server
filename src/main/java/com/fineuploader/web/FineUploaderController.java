@@ -25,14 +25,19 @@ public class FineUploaderController {
 
     @CrossOrigin
     @PostMapping("/uploads")
-    public ResponseEntity<UploadResponse> upload(@RequestParam("qqfile") MultipartFile file,
-                                                 @RequestParam("qquuid") String uuid,
-                                                 @RequestParam("qqfilename") String fileName,
-                                                 @RequestParam(value = "qqtotalfilesize", required = false, defaultValue = "-1") long totalFileSize) {
+    public ResponseEntity<UploadResponse> upload(
+            @RequestParam("qqfile") MultipartFile file,
+            @RequestParam("qquuid") String uuid,
+            @RequestParam("qqfilename") String fileName,
+            @RequestParam(value = "qqpartindex", required = false, defaultValue = "-1") int partIndex,
+            @RequestParam(value = "qqtotalparts", required = false, defaultValue = "-1") int totalParts,
+            @RequestParam(value = "qqtotalfilesize", required = false, defaultValue = "-1") long totalFileSize) {
 
         UploadRequest request = new UploadRequest(uuid, file);
         request.setFileName(fileName);
-        request.setTotalSize(totalFileSize);
+        request.setTotalFileSize(totalFileSize);
+        request.setPartIndex(partIndex);
+        request.setTotalParts(totalParts);
 
         storageService.save(request);
 
@@ -50,6 +55,19 @@ public class FineUploaderController {
     public ResponseEntity<Void> delete(@PathVariable("uuid") String uuid) {
         storageService.delete(uuid);
         return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin
+    @PostMapping("/chunksdone")
+    public ResponseEntity<Void> chunksDone(
+            @RequestParam("qquuid") String uuid,
+            @RequestParam("qqfilename") String fileName,
+            @RequestParam(value = "qqtotalparts") int totalParts,
+            @RequestParam(value = "qqtotalfilesize") long totalFileSize) {
+
+        storageService.mergeChunks(uuid, fileName, totalParts, totalFileSize);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
