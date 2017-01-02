@@ -12,7 +12,6 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Created by ovaldez on 11/13/16.
@@ -26,7 +25,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Autowired
     public FileSystemStorageService(UploadServerProperties props) {
-        this.basePath = Paths.get(props.getBaseDir());
+        this.basePath = props.getBaseDir();
     }
 
     @Override
